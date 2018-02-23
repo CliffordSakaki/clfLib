@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace clfLib
 {
-    public class MoveByStick : MonoBehaviour
+    public class MoveXZByStick : MonoBehaviour
     {
         private CharCtrl charCtrl;
         // Use this for initialization
@@ -30,16 +30,16 @@ namespace clfLib
             Debug.Log ("verticalValue = " + verticalValue);
 
             if (horizontalValue > 0.0f) {
-                charCtrl.move (CharCtrl.direction.right);
+                charCtrl.move (CharCtrl.direction.xPlus);
             }
             if (horizontalValue < 0.0f) {
-                charCtrl.move (CharCtrl.direction.left);
+                charCtrl.move (CharCtrl.direction.xMinus);
             }
             if (verticalValue > 0.0f) {
-                charCtrl.move (CharCtrl.direction.up);
+                charCtrl.move (CharCtrl.direction.zPlus);
             }
             if (verticalValue < 0.0f) {
-                charCtrl.move (CharCtrl.direction.down);
+                charCtrl.move (CharCtrl.direction.zMinus);
             }
         }
     }

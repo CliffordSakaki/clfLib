@@ -54,10 +54,6 @@ public class scrWorldMain : MonoBehaviour
         _map.setObjectPositionOnMapCell (_myChar, 1, 1, 2);
         _myChar_CharCtrl = _myChar.GetComponent<clfLib.CharCtrl> ();
         _myChar_CharCtrl.setOriginNow ();
-        _myChar_CharCtrl.setMoveValue (clfLib.CharCtrl.direction.up, clfLib.CharCtrl.moveValueUp);
-        _myChar_CharCtrl.setMoveValue (clfLib.CharCtrl.direction.down, clfLib.CharCtrl.moveValueDown);
-        _myChar_CharCtrl.setMoveValue (clfLib.CharCtrl.direction.right, clfLib.CharCtrl.moveValueRight);
-        _myChar_CharCtrl.setMoveValue (clfLib.CharCtrl.direction.left, clfLib.CharCtrl.moveValueLeft);
     }
 	
     // Update is called once per frame

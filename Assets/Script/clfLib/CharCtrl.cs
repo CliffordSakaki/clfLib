@@ -24,6 +24,12 @@ namespace clfLib
         // Use this for initialization
         void Start ()
         {
+            setMoveValue (clfLib.CharCtrl.direction.xPlus, clfLib.CharCtrl.moveValueXPlus);
+            setMoveValue (clfLib.CharCtrl.direction.xMinus, clfLib.CharCtrl.moveValueXMinus);
+            setMoveValue (clfLib.CharCtrl.direction.yPlus, clfLib.CharCtrl.moveValueYPlus);
+            setMoveValue (clfLib.CharCtrl.direction.yMinus, clfLib.CharCtrl.moveValueYMinus);
+            setMoveValue (clfLib.CharCtrl.direction.zPlus, clfLib.CharCtrl.moveValueZPlus);
+            setMoveValue (clfLib.CharCtrl.direction.zMinus, clfLib.CharCtrl.moveValueZMinus);
 		
         }
 	
@@ -47,10 +53,12 @@ namespace clfLib
         //  方向
         public enum direction
         {
-            up,
-            down,
-            left,
-            right,
+            xPlus,
+            xMinus,
+            yPlus,
+            yMinus,
+            zPlus,
+            zMinus,
 
             max
         }
@@ -58,10 +66,12 @@ namespace clfLib
         //  方向毎の移動量
         private clfLib.VectorI3[] _moveValue = new clfLib.VectorI3[(int)direction.max];
 
-        public readonly static clfLib.VectorI3 moveValueUp = clfLib.VectorI3.create (0, 0, 1);
-        public readonly static clfLib.VectorI3 moveValueDown = clfLib.VectorI3.create (0, 0, -1);
-        public readonly static clfLib.VectorI3 moveValueLeft = clfLib.VectorI3.create (-1, 0, 0);
-        public readonly static clfLib.VectorI3 moveValueRight = clfLib.VectorI3.create (1, 0, 0);
+        public readonly static clfLib.VectorI3 moveValueYPlus = clfLib.VectorI3.create (0, 1, 0);
+        public readonly static clfLib.VectorI3 moveValueYMinus = clfLib.VectorI3.create (0, -1, 0);
+        public readonly static clfLib.VectorI3 moveValueXPlus = clfLib.VectorI3.create (1, 0, 0);
+        public readonly static clfLib.VectorI3 moveValueXMinus = clfLib.VectorI3.create (-1, 0, 0);
+        public readonly static clfLib.VectorI3 moveValueZPlus = clfLib.VectorI3.create (0, 0, 1);
+        public readonly static clfLib.VectorI3 moveValueZMinus = clfLib.VectorI3.create (0, 0, -1);
 
         public void setMoveValue (direction direct, VectorI3 veci)
         {
