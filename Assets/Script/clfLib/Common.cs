@@ -103,6 +103,29 @@ namespace clfLib
             return vecf;
         }
 
+        //
+        //
+        //
+        public static         VectorI3 operator / (VectorI3 veci, int v)
+        {
+            veci.x /= v;
+            veci.y /= v;
+            veci.z /= v;
+
+            return veci;
+        }
+
+        //
+        //
+        //
+        public static  VectorI3 operator * (VectorI3 veci, int v)
+        {
+            veci.x *= v;
+            veci.y *= v;
+            veci.z *= v;
+
+            return veci;
+        }
     }
 
     //

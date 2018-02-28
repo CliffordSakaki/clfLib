@@ -78,9 +78,14 @@ namespace clfLib
             _moveValue [(int)direct] = veci;
         }
 
-        public void move (direction dirct)
+        public void move (direction direct)
         {
-            moveByStep (_moveValue [(int)dirct]);
+            move (direct, 1);
+        }
+
+        public void move (direction direct, int magnification)
+        {
+            moveByStep (_moveValue [(int)direct] * magnification);
         }
 
         //

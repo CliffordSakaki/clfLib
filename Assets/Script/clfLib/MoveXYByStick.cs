@@ -7,7 +7,7 @@ namespace clfLib
     //
     //
     //
-    public class MoveXZByStick : MoveByStick
+    public class MoveXYByStick : MoveByStick
     {
         protected override void inputSticks (float horizontalValue, float verticalValue)
         {
@@ -18,12 +18,11 @@ namespace clfLib
                 charCtrl.move (CharCtrl.direction.xMinus);
             }
             if (verticalValue > 0.0f) {
-                charCtrl.move (CharCtrl.direction.zPlus);
+                charCtrl.move (CharCtrl.direction.yPlus);
             }
             if (verticalValue < 0.0f) {
-                charCtrl.move (CharCtrl.direction.zMinus);
+                charCtrl.move (CharCtrl.direction.yMinus);
             }
         }
     }
-
 }
