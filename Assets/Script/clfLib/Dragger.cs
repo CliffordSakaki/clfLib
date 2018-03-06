@@ -28,12 +28,12 @@ public class Dragger : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHand
     public virtual void OnDrag (PointerEventData eventData)
     {
         Vector2 pos = eventData.position;
-        Debug.Log ("OnBeginDrag:(" + pos.x + ", " + pos.y + ")");
+        Debug.Log ("OnDrag:(" + pos.x + ", " + pos.y + ")");
     }
 
     public virtual void OnEndDrag (PointerEventData eventData)
     {
         Vector2 pos = eventData.position;
-        Debug.Log ("OnBeginDrag:(" + pos.x + ", " + pos.y + ")");
+        Debug.Log ("OnEndDrag:(" + pos.x + ", " + pos.y + ")");
     }
 }
