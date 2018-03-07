@@ -9,7 +9,7 @@ public class scrPlanet : MonoBehaviour
     void Start ()
     {
         Rigidbody rig = GetComponent<Rigidbody> ();
-        rig.velocity = (Quaternion.Euler (0.0f, Random.Range (0.0f, 360.0f), 0.0f) * Vector3.forward);
+        rig.velocity = (Quaternion.Euler (0.0f, Random.Range (0.0f, 360.0f), 0.0f) * Vector3.forward * 0.1f);
     }
 	
     // Update is called once per frame
