@@ -12,6 +12,11 @@ public class Graviton : MonoBehaviour
     private Rigidbody _rig;
     public const float G = (float)6.674e-11;
 
+    //    [System.Serializable]
+
+    public Collider gravityRangeCollider;
+    //{ get; set; }
+
     public Vector3 getGravityForce (Graviton target)
     {
         if (_rig) {
@@ -32,23 +37,84 @@ public class Graviton : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        _gravityProcessOnTrigger = null;
+        _gravityProcessOnUpdate = null;
+
         _rig = GetComponent<Rigidbody> ();
+
+
         if (_rig) {
-            _gravitonList.Add (this);
-            _rig.useGravity = false;
+            if (gravityRangeCollider.GetComponent<BoxCollider> ()) {
+                _gravityProcessOnTrigger = gravityProcessBox;
+            }
+            if (gravityRangeCollider.GetComponent<SphereCollider> ()) {
+                _gravityProcessOnTrigger = gravityProcessSphere;
+            }
+            if (gravityRangeCollider.GetComponent<CapsuleCollider> ()) {
+                _gravityProcessOnTrigger = gravityProcessCapsule;
+            }
+
+            if (_gravityProcessOnTrigger == null) {
+                _gravitonList.Add (this);
+                _rig.useGravity = false;
+                _gravityProcessOnUpdate = gravityProcessOnupdate;
+            }
+        }
+
+    }
+
+    private gravityProcessOnUpdate _gravityProcessOnUpdate;
+
+    private     delegate void gravityProcessOnUpdate ();
+
+    void gravityProcessOnupdate ()
+    {
+        foreach (Graviton tgtGraviton in _gravitonList) {
+            if (tgtGraviton != this) {
+                _rig.AddForce (getGravityForce (tgtGraviton));
+                //_rig.AddForce
+            }
         }
     }
-	
+
+    private gravityProcessOnTrigger _gravityProcessOnTrigger;
+
+    private     delegate void gravityProcessOnTrigger (Graviton tgtGraviton);
+
+    //
+    //
+    //
+    void gravityProcessSphere (Graviton tgtGraviton)
+    {
+        _rig.AddForce (getGravityForce (tgtGraviton));
+    }
+
+    //
+    //
+    //
+    void gravityProcessBox (Graviton tgtGraviton)
+    {
+        _rig.AddForce (getGravityForce (tgtGraviton));
+    }
+
+    //
+    //
+    //
+    void gravityProcessCapsule (Graviton tgtGraviton)
+    {
+        _rig.AddForce (getGravityForce (tgtGraviton));
+    }
+
     // Update is called once per frame
     void Update ()
     {
-        if (_rig) {
-            foreach (Graviton tgtGraviton in _gravitonList) {
-                if (tgtGraviton != this) {
-                    _rig.AddForce (getGravityForce (tgtGraviton));
-                    //_rig.AddForce
-                }
-            }
+        _gravityProcessOnUpdate ();
+    }
+
+    void OnTriggerStay (Collider collider)
+    {
+        if ((collider == gravityRangeCollider)) {
+            _gravityProcessOnTrigger (collider.gameObject.GetComponent<Graviton> ());
         }
     }
 }
