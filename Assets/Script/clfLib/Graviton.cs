@@ -17,18 +17,20 @@ public class Graviton : MonoBehaviour
     public Collider gravityRangeCollider;
     //{ get; set; }
 
-    public Vector3 getGravityForce (Graviton target)
+    public Vector3 getGravityForce (Graviton tgtGraviton)
     {
         if (_rig) {
-            Rigidbody tgtrig = target._rig;
-            float r2 = Vector3.SqrMagnitude (gameObject.transform.position - target.gameObject.transform.position); //Vector3.Distance (gameObject.transform.position, target.gameObject.transform.position);
+            Rigidbody tgtRig = tgtGraviton._rig;
+            Vector3 tgtPos = tgtGraviton.gameObject.transform.position;
+
+            float r2 = Vector3.SqrMagnitude (gameObject.transform.position - tgtPos); //Vector3.Distance (gameObject.transform.position, target.gameObject.transform.position);
             //Debug.Log ("my pos (" + gameObject.transform.position.x + ", " + gameObject.transform.position.y + ", " + gameObject.transform.position.z + ")");
             //Debug.Log ("tgt pos (" + target.gameObject.transform.position.x + ", " + target.gameObject.transform.position.y + ", " + target.gameObject.transform.position.z + ")");
 
             //Debug.Log ("r = (" + r + ")");
-            Vector3 vec = target.transform.position - transform.position;
+            Vector3 vec = tgtPos - transform.position;
             //Debug.Log ("vec(" + vec.x + ", " + vec.y + ", " + vec.z + ")");
-            return vec.normalized * G * _rig.mass * tgtrig.mass / r2;//(r * r);
+            return vec.normalized * G * _rig.mass * tgtRig.mass / r2;//(r * r);
         } else {
             return Vector3.zero;
         }
@@ -41,7 +43,6 @@ public class Graviton : MonoBehaviour
         _gravityProcessOnUpdate = null;
 
         _rig = GetComponent<Rigidbody> ();
-
 
         if (_rig) {
             if (gravityRangeCollider.GetComponent<BoxCollider> ()) {
@@ -70,7 +71,7 @@ public class Graviton : MonoBehaviour
     void gravityProcessOnupdate ()
     {
         foreach (Graviton tgtGraviton in _gravitonList) {
-            if (tgtGraviton != this) {
+            if (tgtGraviton != this && tgtGraviton.gravityRangeCollider == null) {
                 _rig.AddForce (getGravityForce (tgtGraviton));
                 //_rig.AddForce
             }
@@ -108,13 +109,15 @@ public class Graviton : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        _gravityProcessOnUpdate ();
+        if (_gravityProcessOnUpdate != null) {
+            _gravityProcessOnUpdate ();
+        }
     }
 
-    void OnTriggerStay (Collider collider)
+    void OnTriggerStay (Collider tgtCollider)
     {
-        if ((collider == gravityRangeCollider)) {
-            _gravityProcessOnTrigger (collider.gameObject.GetComponent<Graviton> ());
+        if (_gravityProcessOnTrigger != null) {
+            _gravityProcessOnTrigger (tgtCollider.gameObject.GetComponent<Graviton> ());
         }
     }
 }
